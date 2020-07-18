@@ -69,7 +69,7 @@ class Flexible extends Field
     {
         parent::__construct($name, $attribute, $resolveCallback);
 
-        $this->button(__('Add layout'));
+        $this->button('Add layout');
 
         // The original menu as default
         $this->menu('flexible-drop-menu');

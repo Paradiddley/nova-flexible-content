@@ -16,18 +16,18 @@ use Whitecube\NovaFlexibleContent\Http\ScopedRequest;
 
 trait HasMediaLibrary {
 
-    use InteractsWithMedia;
+    use HasMedia\HasMediaTrait;
 
     /**
      * Return the underlying model implementing the HasMedia interface
      *
-     * @return \Spatie\MediaLibrary\HasMedia
+     * @return \Spatie\MediaLibrary\HasMedia\HasMedia
      */
-    protected function getMediaModel() : HasMedia
+    protected function getMediaModel() : HasMedia\HasMedia
     {
         $model = Flexible::getOriginModel() ?? $this->model;
 
-        if(is_null($model) || !($model instanceof HasMedia)) {
+        if(is_null($model) || !($model instanceof HasMedia\HasMedia)) {
             throw new \Exception('Origin HasMedia model not found.');
         }
 
@@ -39,9 +39,9 @@ trait HasMediaLibrary {
      *
      * @param string|\Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return \Spatie\MediaLibrary\MediaCollections\FileAdder
+     * @return \Spatie\MediaLibrary\FileAdder\FileAdder
      */
-    public function addMedia($file) : \Spatie\MediaLibrary\MediaCollections\FileAdder
+    public function addMedia($file) : \Spatie\MediaLibrary\FileAdder\FileAdder
     {
         return app(FileAdderFactory::class)
             ->create($this->getMediaModel(), $file, $this->getSuffix())
@@ -58,10 +58,10 @@ trait HasMediaLibrary {
      */
     public function getMedia(string $collectionName = 'default', $filters = []): Collection
     {
-        return app(MediaRepository::class)
+        return app(\Spatie\MediaLibrary\MediaRepository::class)
             ->getCollection($this->getMediaModel(), $collectionName . $this->getSuffix(), $filters);
     }
-  
+
     /**
      * Get the media collection name suffix.
      *
@@ -71,7 +71,7 @@ trait HasMediaLibrary {
     {
         return '_' . $this->inUseKey();
     }
-    
+
     /**
      * Resolve fields for display using given attributes.
      *

@@ -3,7 +3,7 @@
 namespace Whitecube\NovaFlexibleContent\FileAdder;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\MediaCollections\FileAdderFactory as OriginalFileAdderFactory;
+use Spatie\MediaLibrary\FileAdder\FileAdderFactory as OriginalFileAdderFactory;
 use Whitecube\NovaFlexibleContent\FileAdder\FileAdder as NewFileAdder;
 
 class FileAdderFactory extends OriginalFileAdderFactory
@@ -13,9 +13,9 @@ class FileAdderFactory extends OriginalFileAdderFactory
      * @param string|\Symfony\Component\HttpFoundation\File\UploadedFile $file
      * @param string|null $suffix
      *
-     * @return \Spatie\MediaLibrary\MediaCollections\FileAdder
+     * @return \Spatie\MediaLibrary\FileAdder\FileAdder
      */
-    public static function create(Model $subject, $file, string $suffix = null): \Spatie\MediaLibrary\MediaCollections\FileAdder
+    public static function create(Model $subject, $file, string $suffix = null): \Spatie\MediaLibrary\FileAdder\FileAdder
     {
         return app(NewFileAdder::class)
             ->setSubject($subject)
